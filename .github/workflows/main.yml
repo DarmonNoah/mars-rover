@@ -1,0 +1,34 @@
+name: .NET Build & Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    env:
+      Solution_Name: 'CSharp xUnit starter.sln'
+      Configuration: 'Release'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore "${{ env.Solution_Name }}"
+
+      - name: Build solution
+        run: dotnet build "${{ env.Solution_Name }}" --configuration ${{ env.Configuration }} --no-restore
+
+      - name: Run tests
+        run: dotnet test "${{ env.Solution_Name }}" --configuration ${{ env.Configuration }} --no-build --verbosity normal
