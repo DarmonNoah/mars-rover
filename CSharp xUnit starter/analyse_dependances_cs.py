@@ -29,3 +29,4 @@ for f in cs_files:
         print(f"Usings trouvés : {set(usings)}")
         print(f"Instanciations trouvées : {set(instanciations)}")
         print(f"Appels statiques trouvés : {set(static_calls)}")
+        
